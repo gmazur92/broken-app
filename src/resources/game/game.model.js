@@ -1,7 +1,7 @@
-const db = require('../db');
-const DataTypes = require('sequelize');
+import { sequelize } from '../../db.js';
+import DataTypes from 'sequelize';
 
-module.exports = db.sequelize.define('game', {
+const Game = sequelize.define('game', {
   title: {
     type: DataTypes.STRING(25),
     allowNull: false,
@@ -37,3 +37,5 @@ module.exports = db.sequelize.define('game', {
     allowNull: false,
   },
 });
+
+export default Game;

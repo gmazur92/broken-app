@@ -1,11 +1,11 @@
-const {Sequelize} = require('sequelize');
-require('dotenv').config()
+import { Sequelize } from 'sequelize';
+import config from './common/config.js';
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+  config.DB_NAME, config.DB_USER, config.DB_PASSWORD, {
     dialect: 'postgres',
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
+    host: config.DB_HOST,
+    port: config.DB_PORT,
     operatorsAliases: false,
   },
 );
@@ -21,9 +21,7 @@ const connect = async() => {
   }
 };
 
-const database = {
-  sequelize: sequelize,
+export {
+  sequelize,
   connect,
 };
-
-module.exports = database;
