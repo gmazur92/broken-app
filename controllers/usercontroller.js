@@ -2,14 +2,13 @@ const express = require('express');
 const router = new express.Router();
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
-
 var User = require('../models/user');
 
 router.post('/signup', (req, res) => {
     User.create({
         full_name: req.body.user.full_name,
         username: req.body.user.username,
-        passwordhash: bcrypt.hashSync(req.body.user.password, 10),
+        passwordHash: bcrypt.hashSync(req.body.user.password, 10),
         email: req.body.user.email,
     })
         .then(
@@ -20,7 +19,6 @@ router.post('/signup', (req, res) => {
                     token: token
                 })
             },
-
             function signupFail(err) {
                 res.status(500).send(err.message)
             }
@@ -45,7 +43,6 @@ router.post('/signin', (req, res) => {
         } else {
             res.status(403).send({ error: "User not found." })
         }
-
     })
 })
 

@@ -12,7 +12,7 @@ module.exports = function (req, res, next) {
             jwt.verify(sessionToken, 'lets_play_sum_games_man', (err, decoded) => {
                 if (decoded) {
                     User.findOne({ where: { id: decoded.id } }).then(user => {
-                        req.user = user;
+                        req.user = user.dataValues;
                         console.log(`user: ${user}`)
                         next()
                     },
