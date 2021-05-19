@@ -1,30 +1,53 @@
-import Game from './game.model.js';
+import GameService from './game.service.js';
 
 class GameController {
   static async getAll(req, res) {
-    const games = await GameService.getAll();
-    res.json(games.map(Game.toResponse));
+    const games = await GameService.getAll(req.user.id);
+    if (!games.length) {
+      return res.status(500).json({
+        message: 'Data not found',
+      });
+    }
+    return res.status(200).json({
+      games: games,
+      message: 'Data fetched.',
+    });
   };
 
   static async get(req, res) {
-    const game = await GameService.get();
-    res.json(Game.toResponse);
+    const id = req.params.id
+    const dto = {id, owner_id: req.user.id};
+    const game = await GameService.get(dto);
+    if (!games.length) {
+      return res.status(500).json({
+        message: 'Data not found',
+      });
+    }
+    return res.status(200).json({
+      games: games,
+      message: 'Data fetched.',
+    });
   };
 
-  static async create(req, res) {
-    const game = await GameService.create();
-    res.json(Game.toResponse);
-  };
-
-  static async update(req, res) {
-    const game = await GameService.update();
-    res.json(Game.toResponse);
-  };
-
-  static async delete(req, res) {
-    const game = await GameService.delete();
-    // res.json(Game.toResponse);
-  };
+  // static async get(req, res) {
+  //   const game = await GameService.get();
+  //   res.json(game);
+  // };
+  //
+  // static async create(req, res) {
+  //   const game = await GameService.create();
+  //   res.json(Game.toResponse);
+  // };
+  //
+  // static async update(req, res) {
+  //   const game = await GameService.update();
+  //   res.json(game);
+  // };
+  //
+  // static async delete(req, res) {
+  //   const game = await GameService.delete();
+  //   res.json({});
+  // };
 }
 
 export default GameController;
