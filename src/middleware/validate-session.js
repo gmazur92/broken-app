@@ -17,14 +17,19 @@ const validateSession = async(req, res, next) => {
   try {
     decoded = jwt.verify(sessionToken, config.SECRET);
   } catch (err) {
-    console.log(err);
+    return res.status(401).send({error: 'Token expired'});
   }
 
   const user = await User.findOne({where: {id: decoded.id}});
   if (!user) {
     res.status(401).send({error: 'not authorized'});
   }
-  req.user = user.dataValues; //@TODO hm...
+  req.user = {
+    id: user.dataValues.id,
+    full_name: user.dataValues.full_name,
+    email: user.dataValues.email,
+    username: user.dataValues.username,
+  };
   next();
 };
 

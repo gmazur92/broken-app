@@ -28,12 +28,10 @@ class AuthService {
     let user;
     try {
       user = await AuthRepository.signIn(dto.username);
-      console.log(user);
     } catch (e) {
       return; //@TODO implement error
     }
     const match = await bcrypt.compare(dto.password, user.passwordHash);
-    console.log(match);
     if (!match) {
       return 'Wrong password'; //@TODO implement error WRONG PASSWORD
     }
