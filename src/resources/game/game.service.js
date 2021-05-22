@@ -4,7 +4,7 @@ class GameService {
   static async getAll(id) {
     const games = await GameRepository.getAll(id);
     if (!games.length) {
-      throw new Error('No data');
+      throw new Error();
     }
     return games;
   }
@@ -12,7 +12,7 @@ class GameService {
   static async get(dto) {
     const game = await GameRepository.get(dto);
     if (!game) {
-      throw new Error('No data');
+      throw new Error();
     }
     return game;
   }

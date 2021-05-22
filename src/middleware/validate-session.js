@@ -11,7 +11,7 @@ const validateSession = async(req, res, next) => {
     return;
   }
   if (!sessionToken) {
-    return res.status(403).send({auth: false, message: 'No token provided.'});
+    return res.status(401).send({auth: false, message: 'No token provided.'});
   }
 
   try {

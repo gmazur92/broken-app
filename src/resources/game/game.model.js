@@ -12,6 +12,7 @@ const Game = sequelize.define('game', {
   title: {
     type: DataTypes.STRING(25),
     allowNull: false,
+    notEmpty: true,
   },
 
   owner_id: {
