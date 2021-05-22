@@ -1,51 +1,31 @@
 import AuthRepository from './auth.repository.js';
 import jwt from 'jsonwebtoken';
-import config from '../../common/config.js'
-import bcrypt from 'bcrypt'
+import config from '../../common/config.js';
+import bcrypt from 'bcrypt';
 
-const expiresIn = 60 * 60 * 24
+const expiresIn = 60 * 60 * 24;
 
 class AuthService {
   static async signUp(dto) {
-    let token;
-    let createdUser;
     const newUser = {
       full_name: dto.full_name,
       username: dto.username,
       passwordHash: bcrypt.hashSync(dto.password, 10),
       email: dto.email,
     };
-    try {
-      createdUser = await AuthRepository.signUp(newUser);
-      token = jwt.sign({id: createdUser.id}, config.SECRET, {expiresIn});
-    } catch (e) {
-      return e;
-    }
+    const createdUser = await AuthRepository.signUp(newUser);
+    const token = jwt.sign({id: createdUser.id}, config.SECRET, {expiresIn});
     return {user: createdUser, sessionToken: token};
   }
 
   static async signIn(dto) {
-    let user;
-    try {
-      user = await AuthRepository.signIn(dto.username);
-    } catch (e) {
-      return; //@TODO implement error
-    }
+    const user = await AuthRepository.signIn(dto.username);
     const match = await bcrypt.compare(dto.password, user.passwordHash);
     if (!match) {
-      return 'Wrong password'; //@TODO implement error WRONG PASSWORD
+      throw new Error('Wrong password');
     }
-    let token = jwt.sign({id: user.id}, config.SECRET, {expiresIn});
-    return {
-      user: {
-        id: user.id,
-        username: user.username,
-        full_name: user.full_name,
-        email: user.email,
-      },
-      message: 'Successfully authenticated.',
-      sessionToken: token,
-    };
+    const token = jwt.sign({id: user.id}, config.SECRET, {expiresIn});
+    return {user, sessionToken: token};
   }
 }
 
