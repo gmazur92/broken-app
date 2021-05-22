@@ -1,7 +1,7 @@
 import AuthRepository from './auth.repository.js';
 import jwt from 'jsonwebtoken';
 import config from '../../common/config.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const expiresIn = 60 * 60 * 24;
 
