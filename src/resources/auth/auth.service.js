@@ -15,7 +15,7 @@ class AuthService {
     };
     const createdUser = await AuthRepository.signUp(newUser);
     const token = jwt.sign({id: createdUser.id}, config.SECRET, {expiresIn});
-    return {user: createdUser.dataValues, sessionToken: token};
+    return {user: createdUser, sessionToken: token};
   }
 
   static async signIn(dto) {
