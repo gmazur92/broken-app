@@ -1,17 +1,21 @@
 import AuthService from './auth.service.js';
+import deletePropsFromObj from '../../utils/deletePropsFromObj.js';
+import { excludeFromUserResponse } from '../../common/responseExcludeConstants.js';
 
 class AuthController {
   static async signUp(req, res) {
     const userDto = req.body;
     try {
       const createdUser = await AuthService.signUp(userDto);
+      const {user, sessionToken} = createdUser
+      const userToResponse = deletePropsFromObj(user, excludeFromUserResponse)
       res.status(201).json({
-        full_name: createdUser.full_name,
-        username: createdUser.username,
-        email: createdUser.email,
+        user: userToResponse,
+        sessionToken,
+        message: 'Successfully registered.',
       });
     } catch (e) {
-      res.status(500).send({message: e.message});
+      res.status(500).send({message: 'User with same data already exist in database'});
     }
   }
 
@@ -19,18 +23,15 @@ class AuthController {
     const userDto = req.body;
     try {
       const response = await AuthService.signIn(userDto);
+      const {user, sessionToken} = response
+      const userToResponse = deletePropsFromObj(user, excludeFromUserResponse)
       res.json({
-        user: {
-          id: response.user.id,
-          username: response.user.username,
-          full_name: response.user.full_name,
-          email: response.user.email,
-        },
-        sessionToken: response.sessionToken,
+        user: userToResponse,
+        sessionToken,
         message: 'Successfully authenticated.',
       });
     } catch (e) {
-      res.status(502).json({error: 'Passwords do not match.'});
+      res.status(401).json({message: 'Incorrect username or password.'});
     }
   }
 }

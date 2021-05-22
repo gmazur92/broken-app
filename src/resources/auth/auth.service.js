@@ -15,14 +15,14 @@ class AuthService {
     };
     const createdUser = await AuthRepository.signUp(newUser);
     const token = jwt.sign({id: createdUser.id}, config.SECRET, {expiresIn});
-    return {user: createdUser, sessionToken: token};
+    return {user: createdUser.dataValues, sessionToken: token};
   }
 
   static async signIn(dto) {
     const user = await AuthRepository.signIn(dto.username);
     const match = await bcrypt.compare(dto.password, user.passwordHash);
     if (!match) {
-      throw new Error('Wrong password');
+      throw new Error();
     }
     const token = jwt.sign({id: user.id}, config.SECRET, {expiresIn});
     return {user, sessionToken: token};
