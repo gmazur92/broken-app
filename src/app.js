@@ -1,12 +1,11 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import router from './router/index.js';
 import { connect } from './db.js';
 import config from './common/config.js';
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use('/api', router);
 
