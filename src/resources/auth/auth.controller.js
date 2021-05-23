@@ -21,7 +21,7 @@ class AuthController {
         message: 'Successfully registered.',
       });
     } catch (e) {
-      res.status(500).send({message: 'User with same data already exist in database'});
+      res.status(400).send({message: 'User with same data already exist in database'});
     }
   }
 

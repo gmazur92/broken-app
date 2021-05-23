@@ -9,7 +9,7 @@ const User = sequelize.define('user', {
     allowNull: false,
   },
 
-  full_name: {
+  fullName: {
     type: DataTypes.STRING,
     allowNull: false,
     notEmpty: true,
@@ -25,7 +25,7 @@ const User = sequelize.define('user', {
     }
   },
 
-  passwordHash: {
+  password: {
     type: DataTypes.STRING,
     allowNull: false,
   },
