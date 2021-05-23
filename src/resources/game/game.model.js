@@ -15,7 +15,7 @@ const Game = sequelize.define('game', {
     notEmpty: true,
   },
 
-  owner_id: {
+  ownerId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
@@ -25,12 +25,12 @@ const Game = sequelize.define('game', {
     allowNull: false,
   },
 
-  esrb_rating: {
+  esrbRating: {
     type: DataTypes.CHAR(5),
     allowNull: false,
   },
 
-  user_rating: {
+  userRating: {
     type: DataTypes.INTEGER,
     allowNull: false,
     validate: {
@@ -39,7 +39,7 @@ const Game = sequelize.define('game', {
     },
   },
 
-  have_played: {
+  havePlayed: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
     allowNull: false,

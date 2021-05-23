@@ -22,7 +22,7 @@ class GameController {
 
   static async get(req, res) {
     const id = req.params.id;
-    const dto = {id, owner_id: req.user.id};
+    const dto = {id, ownerId: req.user.id};
     try {
       const game = await GameService.get(dto);
       const gameToResponse = deletePropsFromObj(game, excludeFromGameResponse);
@@ -44,7 +44,7 @@ class GameController {
       });
     }
     const dto = req.body;
-    dto.owner_id = req.user.id;
+    dto.ownerId = req.user.id;
     try {
       const game = await GameService.create(dto);
       const gameToResponse = deletePropsFromObj(game, excludeFromGameResponse);
