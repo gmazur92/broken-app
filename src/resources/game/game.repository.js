@@ -1,0 +1,27 @@
+import Game from './game.model.js';
+
+class GameRepository {
+  static async getAll(id) {
+    return await Game.findAll({raw: true, where: {ownerId: id}});
+  }
+
+  static async get(dto) {
+    return await Game.findOne({raw: true, where: {id: dto.id, ownerId: dto.ownerId}});
+  }
+
+  static async create(dto) {
+    const createdGame = await Game.create(dto);
+    return createdGame.dataValues;
+  }
+
+  static async update(id, ownerId, dto) {
+    const updatedGame = await Game.update(dto, {returning: true, plain: true, raw: true, where: {id: id, ownerId: ownerId}});
+    return updatedGame[ 1 ];
+  }
+
+  static async delete(id, ownerId) {
+    return await Game.destroy({where: {id: id, ownerId: ownerId}});
+  }
+}
+
+export default GameRepository;

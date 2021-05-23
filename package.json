@@ -1,17 +1,18 @@
 {
   "name": "brokenapp",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "src/app.js",
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon src/app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
+    "dotenv": "^9.0.2",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.3.0",
-    "pg": "^7.6.0",
+    "pg": "^8.6.0",
     "sequelize": "^4.41.0"
   },
   "devDependencies": {
