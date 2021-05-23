@@ -1,2 +1,2 @@
-export const excludeFromUserResponse = ['passwordHash', 'id', 'updatedAt', 'createdAt']
-export const excludeFromGameResponse = ['id', 'owner_id','updatedAt', 'createdAt']
+export const excludeFromUserResponse = ['password', 'id', 'updatedAt', 'createdAt']
+export const excludeFromGameResponse = ['ownerId','updatedAt', 'createdAt']
